@@ -1,0 +1,40 @@
+ int countSmaller(vector<int> &arr,int mid)
+ {
+     int s=0,e=arr.size()-1;
+     
+     while(s<=e)
+     {
+         int m =(s+e)>>1;
+         if(arr[m]<=mid)
+         {
+             s=m+1;
+         }
+         else
+         {
+             e =m-1;
+         }
+         
+     }return s;
+ }
+int getMedian(vector<vector<int>> &A)
+{
+    // Write your code here.
+    int row=(int) A.size();
+    int col=(int) A[0].size();
+    
+    int l =1,h=1e6;
+    
+    while(l<=h)
+    {
+        int mid = (l+h)>>1;
+        int count=0;
+        for(int i=0;i<row;i++)
+        {
+            count += countSmaller(A[i],mid);
+        }
+        if (count<=(row*col)/2) 
+        l=mid+1;
+        else h =mid-1;
+    }
+    return l;
+}
