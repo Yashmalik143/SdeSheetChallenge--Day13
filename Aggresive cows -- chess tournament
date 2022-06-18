@@ -1,0 +1,40 @@
+//***Aggressive Cows -TUF
+bool canPlace(vector<int>positions,int n ,int c,int mid)
+{
+    int count = 1;
+    int recentplacedat=0;
+    for(int i =1;i<n;i++)
+    {
+        if(positions[i]-positions[recentplacedat]>=mid) 
+            //agar cow1 or cow reentplacedat me dist agar >= dist hai then we can placed
+        {
+            count++;    //increase no of cows
+            recentplacedat = i; //placed
+        }
+       
+    }
+     if(count>=c) //if all cows placed successfully return true otherwise false
+        {
+            return true; 
+        }
+        else return false;
+}
+int chessTournament(vector<int> positions , int n ,  int c){
+	// Write your code here
+    sort(positions.begin(),positions.end());
+    int l =1; 
+    int r = positions[n-1]-positions[0]; //max - min (sorted)// because of theese we find max dist between element of array
+    int ans=0;
+    while(l<=r)
+    {
+        int mid =(l+r)/2;
+        if(canPlace(positions,n,c,mid)) //can place a cow at with a dist as mid ? if yes the low =mid+! because we want larhet dist b/w possible 
+        {
+            ans = mid; //found largest store it in ans
+            l=mid+1; 
+        }
+        else     //it means cant placed then we reduce the dist 
+            r=mid-1;
+    }
+    return ans;
+}
