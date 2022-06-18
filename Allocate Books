@@ -1,0 +1,67 @@
+#include<bits/stdc++.h>
+long long maxof(vector<int>time,int m)
+          { int ans = 0;
+              for(int i=0;i<m;i++)
+              {
+                  ans= max(ans,time[i]);
+              } return ans;
+          }
+long long sumof(vector<int>time,int m)
+{
+    long long ans = 0;
+              for(int i=0;i<m;i++)
+              {
+                  ans += time[i];
+              } return ans;
+    
+}
+bool isPoss(int n,vector<int>time,int m ,long long mid)
+{
+    int stu=1;
+    long long sum=0;
+    
+    for(int i=0;i<m;i++)
+      {
+//         if(sum+i<=mid) sum+= i;
+//         else if(i<=mid) {stu++; sum =i}
+//         else return false;
+         if(sum+time[i]<=mid)
+         {  sum += time[i];
+          
+         }
+        else {
+          
+             stu++;
+              if(stu>n || time[i]>mid)
+              {
+                  return false;
+              }
+               sum= time[i];
+        }
+     }  return true; 
+}
+
+long long ayushGivesNinjatest(int n, int m, vector<int> time) 
+{	
+	// Write your code here.
+   long long min =0;// maxof(time,m);
+    long long max = sumof(time,m);
+    long long res =0;
+     
+    while(min<=max)
+    {
+        long long mid = (min+max)/2;
+        if(isPoss(n,time,m,mid))
+        {
+            res =mid;
+            max=mid-1;
+        }
+        else
+        {
+            min = mid+1;
+        }
+        mid = min+(max-min)/2;
+    }
+    
+    return res;
+}
